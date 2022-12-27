@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 
@@ -5,31 +7,31 @@ import pytest
     "email,password,expected",
     [
         pytest.param(
-            "qa.ajax.app.automation@gmail.com",
-            "qa_automation_password",
+            os.getenv("EMAIL"),
+            os.getenv("PASSWORD"),
             True,
             id="Successful Authentication",
         ),
         pytest.param(
-            "qa.ajax.app.automation@gmail.com",
+            os.getenv("EMAIL"),
             "test_password123",
             False,
             id="Authentication with incorrect password",
         ),
         pytest.param(
             "test_email123@test.test",
-            "qa_automation_password",
+            os.getenv("PASSWORD"),
             False,
             id="Authentication with incorrect email",
         ),
         pytest.param(
             "",
-            "qa_automation_password",
+            os.getenv("PASSWORD"),
             False,
             id="Authentication without email"
         ),
         pytest.param(
-            "qa.ajax.app.automation@gmail.com",
+            os.getenv("EMAIL"),
             "",
             False,
             id="Authentication without password",

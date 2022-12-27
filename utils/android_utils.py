@@ -1,3 +1,16 @@
+import subprocess
+
+
+def get_udid():
+    device = subprocess.check_output(
+        "adb devices", encoding="utf-8"
+    ).splitlines()[1]
+    if device:
+        return device.split()[0]
+    else:
+        raise Exception("No active devices")
+
+
 def android_get_desired_capabilities():
     return {
         "autoGrantPermissions": True,
@@ -10,7 +23,7 @@ def android_get_desired_capabilities():
         "systemPort": 8301,
         "resetKeyboard": True,
         "takesScreenshot": True,
-        "udid": "emulator-5554",
+        "udid": get_udid(),
         "appPackage": "com.ajaxsystems",
         "appActivity": "com.ajaxsystems.ui.activity.LauncherActivity",
     }
